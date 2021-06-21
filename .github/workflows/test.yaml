@@ -31,4 +31,4 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
           issue-number: ${{ steps.cpr.outputs.pull_request_number }}
-          body: "PR base: ${{ github.event.pull_request.head.ref }}
+          body: "PR base: ${{ github.event.pull_request.head.ref }}"
