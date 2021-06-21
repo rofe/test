@@ -15,7 +15,7 @@ jobs:
         run: |
           touch test_`date +%s`
       - name: Create branch commit and pull request in target repo
-        id: cpr
+        id: create_pull_request
         uses: peter-evans/create-pull-request@v3
         with:
           commit-message: "chore: test"
@@ -26,9 +26,13 @@ jobs:
           delete-branch: true
           title: Test PR
           body: This is just a test
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: branch_name
       - name: Add testing URL
         uses: peter-evans/create-or-update-comment@v1
         with:
           token: ${{ secrets.PAT }}
-          issue-number: ${{ steps.cpr.outputs.pull-request-number }}
-          body: "PR base: ${{ github.event.pull_request.head.ref }}"
+          issue-number: ${{ steps.create_pull_request.outputs.pull-request-number }}
+          body: "PR base: ${{ steps.branch_name.outputs.branch }}"
