@@ -1,4 +1,5 @@
-export const configureSidekick = () => ({
+// export const configureSidekick = () => ({
+initSidekick({
   project: 'Test Project',
   host: '',
   hlx3: true,

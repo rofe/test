@@ -52,6 +52,6 @@
     document.head.append(cfgJS);
   }
   // load project config, call initSidekick()
-  cfgJS.src = `https://${ref}--${repo}--${owner}.hlx.page/tools/sidekick/config.jsonp`;
+  cfgJS.src = `https://${ref}--${repo}--${owner}.hlx.page/tools/sidekick/config.js`;
 
 })();
