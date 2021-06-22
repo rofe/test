@@ -19,7 +19,7 @@
       this.loadContext(cfg);
     }
 
-    lodContext(cfg) {
+    loadContext(cfg) {
       console.log('loadContext', cfg);
       return this;
     }
