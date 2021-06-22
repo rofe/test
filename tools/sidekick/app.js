@@ -40,11 +40,11 @@
   }
   
   let appJS = document.querySelector('script#hlx-sk-app');
-  const repo = appJS && appJS.dataset.repo && JSON.parse(appJS.dataset.repo);
-  if (!repo) {
+  const ghDetails = appJS && appJS.dataset.repo && JSON.parse(appJS.dataset.repo);
+  if (!ghDetails) {
     console.error('error loading sidekick');
   }
-  const { owner, repo, ref } = repo;
+  const { owner, repo, ref } = ghDetails;
   let cfgJS = document.querySelector('script#hlx-sk-config');
   if (!cfgJS) {
     cfgJS =  document.createElement('script');
