@@ -13,19 +13,45 @@
 'use strict';
 
 (() => {
-  export class Test {
+  class Sidekick {
     constructor(cfg) {
-      console.log(cfg);
+      console.log('init', cfg);
+      this.loadContext(cfg);
+    }
+
+    lodContext(cfg) {
+      console.log('loadContext', cfg);
+      return this;
+    }
+
+    toggle() {
+      console.log('toggle');
+      return this;
     }
   }
 
-  export function initSidekick(cfg) {
+  const initSidekick = (cfg) => {
     window.hlx = window.hlx || {};
-    if (!window.hlx.test) {
-      window.hlx.test = new Test(cfg);
+    if (!window.hlx.sidekick) {
+      window.hlx.sidekick = new Sidekick(cfg);
     } else {
-      window.hlx.test.loadContext().toggle();
-    }
-    return window.hlx.test;
+      window.hlx.test.loadContext(cfg).toggle();
+    }  
   }
+  
+  let appJS = document.querySelector('script#hlx-sk-app');
+  const repo = appJS && appJS.dataset.repo && JSON.parse(appJS.dataset.repo);
+  if (!repo) {
+    console.error('error loading sidekick');
+  }
+  const { owner, repo, ref } = repo;
+  let cfgJS = document.querySelector('script#hlx-sk-config');
+  if (!cfgJS) {
+    cfgJS =  document.createElement('script');
+    cfgJS.id = 'hlx-sk-config';
+    document.head.append(cfgJS);
+  }
+  // load project config, call initSidekick()
+  cfgJS.src = `http://${ref}--${repo}--${owner}.hlx.page/tools/sidekick/config.jsonp`;
+
 })();
