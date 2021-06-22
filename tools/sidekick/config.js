@@ -1,5 +1,5 @@
 // export const configureSidekick = () => ({
-initSidekick({
+window.hlx.initSidekick({
   project: 'Test Project',
   host: '',
   hlx3: true,

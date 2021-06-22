@@ -30,8 +30,8 @@
     }
   }
 
-  const initSidekick = (cfg) => {
-    window.hlx = window.hlx || {};
+  window.hlx = window.hlx || {};
+  window.hlx.initSidekick = (cfg) => {
     if (!window.hlx.sidekick) {
       window.hlx.sidekick = new Sidekick(cfg);
     } else {
