@@ -1,13 +1,13 @@
-if (!document.head.querySelector('script#hlx-sk-app')) {
-  const appJS =  document.createElement('script');
+let appJS = document.head.querySelector('script#hlx-sk-app');
+console.log(!!appJS);
+if (!appJS) {
+  appJS =  document.createElement('script');
   appJS.id = 'hlx-sk-app';
   appJS.dataset.repo = JSON.stringify({
     owner: 'rofe',
     repo: 'test',
     ref: 'main'
   });
-  appJS.src = '/tools/sidekick/app.js';
   document.head.append(appJS);
-} else {
-  window.hlx && window.hlx.test && window.hlx.sidekick.loadContext().toggle();
 }
+appJS.src = '/tools/sidekick/app.js';

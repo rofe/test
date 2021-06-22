@@ -46,6 +46,7 @@
   }
   const { owner, repo, ref } = ghDetails;
   let cfgJS = document.querySelector('script#hlx-sk-config');
+  console.log(!!configJS);
   if (!cfgJS) {
     cfgJS =  document.createElement('script');
     cfgJS.id = 'hlx-sk-config';
