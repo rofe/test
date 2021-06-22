@@ -7,6 +7,7 @@ if (!document.head.querySelector('script#hlx-sk-app')) {
     ref: 'main'
   });
   appJS.src = '/tools/sidekick/app.js';
+  document.head.append(appJS);
 } else {
   window.hlx && window.hlx.test && window.hlx.sidekick.loadContext().toggle();
 }
