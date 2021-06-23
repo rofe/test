@@ -35,6 +35,7 @@
     }
   }
 
+  console.log('app.js loaded');
   window.hlx = window.hlx || {};
   
   /**
