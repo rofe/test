@@ -18,6 +18,7 @@
    * @param {Object} cfg The sidekick configuration (extends {@code window.hlx.sidekickConfig})
    */
    function initSidekick(cfg = {}) {
+    console.log('initSidekick', window.hlx.sidekickConfig, cfg);
     // merge base config with extended config
     window.hlx.sidekickConfig = Object.assign(window.hlx.sidekickConfig || {}, cfg);
     if (!window.hlx.sidekick) {
@@ -69,6 +70,7 @@
       if (!owner || !repo || !ref) {
         console.error('error loading sidekick: project data invalid', window.hlx.sidekickConfig);
       }
+      console.log('pre-init', window.hlx.sidekickConfig);
       // look for extended config in project
       window.hlx.configScript =  document.createElement('script');
       window.hlx.configScript.id = 'hlx-sk-config';
