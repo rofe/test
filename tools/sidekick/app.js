@@ -70,8 +70,8 @@
         console.log(`no sidekick config found at ${window.hlx.configScript.src} (${e.message})`);
         window.hlx.initSidekick();
       })
-      if (document.head.querySelector(`script#${window.hlx.configScript}`)) {
-        document.head.querySelector(`script#${window.hlx.configScript}`)
+      if (document.head.querySelector(`script#${window.hlx.configScript.id}`)) {
+        document.head.querySelector(`script#${window.hlx.configScript.id}`)
           .replaceWith(window.hlx.configScript);
       } else {
         document.head.append(window.hlx.configScript);

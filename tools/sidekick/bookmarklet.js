@@ -2,7 +2,7 @@ window.hlx = window.hlx || {};
 window.hlx.sidekickScript = document.createElement('script');
 window.hlx.sidekickScript.id = 'hlx-sk-app';
 window.hlx.sidekickScript.src = '/tools/sidekick/app.js';
-window.hlx.sidekickAppJS.dataset.repo = JSON.stringify({
+window.hlx.sidekickScript.dataset.config = JSON.stringify({
   owner: 'rofe',
   repo: 'test',
   ref: 'main'
