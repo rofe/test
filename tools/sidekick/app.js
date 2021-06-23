@@ -19,7 +19,7 @@
    */
    function initSidekick(cfg = {}) {
     // merge base config with extended config
-    window.hlx.sidekickConfig = Object.assign(window.hlx.sidekickConfig, cfg);
+    window.hlx.sidekickConfig = Object.assign(window.hlx.sidekickConfig || {}, cfg);
     if (!window.hlx.sidekick) {
       window.hlx.sidekick = new Sidekick(cfg).show();
     } else {
