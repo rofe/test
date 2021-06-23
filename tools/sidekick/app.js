@@ -13,6 +13,19 @@
 'use strict';
 
 (() => {
+  /**
+   * Initializes the sidekick and stores a reference to it in {@link window.hlx.sidekick}.
+   * @param {Object} cfg The sidekick configuration (extends {@code window.hlx.sidekickConfig})
+   */
+   function initSidekick(cfg = {}) {
+    // merge base config with extended config
+    window.hlx.sidekickConfig = Object.assign(window.hlx.sidekickConfig, cfg);
+    if (!window.hlx.sidekick) {
+      window.hlx.sidekick = new Sidekick(cfg).show();
+    } else {
+      window.hlx.sidekick.loadContext(cfg).toggle();
+    }  
+  }
   class Sidekick {
     constructor(cfg) {
       console.log('init', cfg);
@@ -37,18 +50,8 @@
 
   console.log('app.js loaded');
   window.hlx = window.hlx || {};
-  
-  /**
-   * Initializes the sidekick and stores it in {@link window.hlx.sidekick}.
-   * @param {Object} cfg The sidekick configuration (extends {@code window.hlx.sidekickConfig})
-   */
-  window.hlx.initSidekick = (cfg = {}) => {
-    window.hlx.sidekickConfig = { cfg, ...window.hlx.sidekickConfig };
-    if (!window.hlx.sidekick) {
-      window.hlx.sidekick = new Sidekick(cfg).show();
-    } else {
-      window.hlx.sidekick.loadContext(cfg).toggle();
-    }  
+  if (!window.hlx.initSidekick) {
+    window.hlx.initSidekick = initSidekick;
   }
   
   if (!window.hlx.sidekickScript && window.hlx.sidekickConfig) {
@@ -64,7 +67,7 @@
     } else {
       const { owner, repo, ref } = window.hlx.sidekickConfig;
       if (!owner || !repo || !ref) {
-        console.error('error loading sidekick: project data invalid');
+        console.error('error loading sidekick: project data invalid', window.hlx.sidekickConfig);
       }
       // look for extended config in project
       window.hlx.configScript =  document.createElement('script');
@@ -76,6 +79,7 @@
         console.log(`no sidekick config found at ${window.hlx.configScript.src} (${e.message})`);
         window.hlx.initSidekick();
       })
+      // init sidekick via project config
       if (document.head.querySelector(`script#${window.hlx.configScript.id}`)) {
         document.head.querySelector(`script#${window.hlx.configScript.id}`)
           .replaceWith(window.hlx.configScript);
