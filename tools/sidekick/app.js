@@ -17,7 +17,6 @@
     constructor(cfg) {
       console.log('init', cfg);
       this.loadContext(cfg);
-      return this;
     }
 
     loadContext(cfg) {
@@ -27,6 +26,11 @@
 
     toggle() {
       console.log('toggle');
+      return this;
+    }
+
+    show() {
+      console.log('show');
       return this;
     }
   }
