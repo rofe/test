@@ -51,7 +51,7 @@
     }  
   }
   
-  if (window.hlx.sidekickConfig) {
+  if (!window.hlx.sidekickScript && window.hlx.sidekickConfig) {
     // backward compatibility mode
     window.hlx.initSidekick();
   } else {
