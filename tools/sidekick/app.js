@@ -31,28 +31,51 @@
   }
 
   window.hlx = window.hlx || {};
-  window.hlx.initSidekick = (cfg) => {
+  
+  /**
+   * Initializes the sidekick and stores it in {@link window.hlx.sidekick}.
+   * @param {Object} cfg The sidekick configuration (extends {@code window.hlx.sidekickConfig})
+   */
+  window.hlx.initSidekick = (cfg = {}) => {
+    window.hlx.sidekickConfig = { cfg, ...window.hlx.sidekickConfig };
     if (!window.hlx.sidekick) {
-      window.hlx.sidekick = new Sidekick(cfg);
+      window.hlx.sidekick = new Sidekick(cfg).show();
     } else {
-      window.hlx.test.loadContext(cfg).toggle();
+      window.hlx.sidekick.loadContext(cfg).toggle();
     }  
   }
   
-  let appJS = document.querySelector('script#hlx-sk-app');
-  const ghDetails = appJS && appJS.dataset.repo && JSON.parse(appJS.dataset.repo);
-  if (!ghDetails) {
-    console.error('error loading sidekick');
+  if (window.hlx.sidekickConfig) {
+    // backward compatibility mode
+    window.hlx.initSidekick();
+  } else {
+    // get base config from script tag
+    window.hlx.sidekickConfig = window.hlx.sidekickScript
+      && window.hlx.sidekickScript.dataset.config
+      && JSON.parse(window.hlx.sidekickScript.dataset.config);
+    if (typeof window.hlx.sidekickConfig !== 'object') {
+      console.error('error loading sidekick: project data missing');
+    } else {
+      const { owner, repo, ref } = window.hlx.sidekickConfig;
+      if (!owner || !repo || !ref) {
+        console.error('error loading sidekick: project data invalid');
+      }
+      // look for extended config in project
+      window.hlx.configScript =  document.createElement('script');
+      window.hlx.configScript.id = 'hlx-sk-config';
+      window.hlx.configScript.src = `https://${ref}--${repo}--${owner}.hlx.page/tools/sidekick/config.js`;
+      window.hlx.configScript.referrerpolicy = 'no-referrer';
+      window.hlx.configScript.addEventListener('error', (e) => {
+        // init sidekick without extended config
+        console.log(`no sidekick config found at ${window.hlx.configScript.src} (${e.message})`);
+        window.hlx.initSidekick();
+      })
+      if (document.head.querySelector(`script#${window.hlx.configScript}`)) {
+        document.head.querySelector(`script#${window.hlx.configScript}`)
+          .replaceWith(window.hlx.configScript);
+      } else {
+        document.head.append(window.hlx.configScript);
+      }
+    }
   }
-  const { owner, repo, ref } = ghDetails;
-  let cfgJS = document.querySelector('script#hlx-sk-config');
-  console.log(!!cfgJS);
-  if (!cfgJS) {
-    cfgJS =  document.createElement('script');
-    cfgJS.id = 'hlx-sk-config';
-    document.head.append(cfgJS);
-  }
-  // load project config, call initSidekick()
-  cfgJS.src = `https://${ref}--${repo}--${owner}.hlx.page/tools/sidekick/config.js`;
-
 })();
