@@ -1,4 +1,3 @@
-console.log('config.js loaded');
 // export const configureSidekick = () => ({
 window.hlx.initSidekick({
   project: 'Test Project',

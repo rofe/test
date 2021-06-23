@@ -49,7 +49,6 @@
     }
   }
 
-  console.log('app.js loaded');
   window.hlx = window.hlx || {};
   if (!window.hlx.initSidekick) {
     window.hlx.initSidekick = initSidekick;
@@ -70,7 +69,6 @@
       if (!owner || !repo || !ref) {
         console.error('error loading sidekick: project data invalid', window.hlx.sidekickConfig);
       }
-      console.log('pre-init', window.hlx.sidekickConfig);
       // look for extended config in project
       window.hlx.configScript =  document.createElement('script');
       window.hlx.configScript.id = 'hlx-sk-config';
