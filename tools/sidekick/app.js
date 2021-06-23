@@ -17,6 +17,7 @@
     constructor(cfg) {
       console.log('init', cfg);
       this.loadContext(cfg);
+      return this;
     }
 
     loadContext(cfg) {
