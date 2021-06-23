@@ -22,9 +22,9 @@
     // merge base config with extended config
     window.hlx.sidekickConfig = Object.assign(window.hlx.sidekickConfig || {}, cfg);
     if (!window.hlx.sidekick) {
-      window.hlx.sidekick = new Sidekick(cfg).show();
+      window.hlx.sidekick = new Sidekick(window.hlx.sidekickConfig).show();
     } else {
-      window.hlx.sidekick.loadContext(cfg).toggle();
+      window.hlx.sidekick.loadContext(window.hlx.sidekickConfig).toggle();
     }  
   }
   class Sidekick {
